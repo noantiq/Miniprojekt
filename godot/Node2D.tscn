@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Living Room.png" type="Texture" id=1]
-[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://lpccatratdog.png" type="Texture" id=2]
 [ext_resource path="res://AnimatedSprite.gd" type="Script" id=3]
 [ext_resource path="res://Character.gd" type="Script" id=4]
 
@@ -109,13 +109,23 @@
 5/shapes = [  ]
 5/z_index = 0
 
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 96, 64, 32, 32 )
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 2 ), ExtResource( 2 ) ],
+"frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
+
+[sub_resource type="CapsuleShape2D" id=4]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 40, 40 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -127,10 +137,32 @@ format = 1
 tile_data = PoolIntArray( 131078, 2, 0, 131079, 3, 0, 262147, 5, 0, 262148, 4, 0, 327683, 2, 0, 327684, 3, 0 )
 
 [node name="Character" type="KinematicBody2D" parent="."]
+position = Vector2( 50, 550 )
 script = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Character"]
-position = Vector2( 50, 550 )
+scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
+animation = "New Anim"
 playing = true
 script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Character"]
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+shape = SubResource( 4 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 200, 550 )
+constant_linear_velocity = Vector2( 40, 40 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 1.52588e-05, 3.05176e-05 )
+shape = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 1 )
+hframes = 7
+vframes = 7
+frame = 36
